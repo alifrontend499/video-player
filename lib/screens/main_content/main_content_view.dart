@@ -20,6 +20,18 @@ class _MainContentScreenState extends State<MainContentScreen> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
@@ -48,7 +60,29 @@ class _MainContentScreenState extends State<MainContentScreen> {
             icon: Padding(
               padding: EdgeInsets.only(bottom: 5, top: 3),
               child: Icon(
-                UniconsLine.map,
+                UniconsLine.download_alt,
+                size: 22,
+              ),
+            ),
+          ),
+
+          const BottomNavigationBarItem(
+            label: "Settings",
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 5, top: 3),
+              child: Icon(
+                UniconsLine.setting,
+                size: 22,
+              ),
+            ),
+          ),
+
+          const BottomNavigationBarItem(
+            label: "Search",
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 5, top: 3),
+              child: Icon(
+                UniconsLine.search,
                 size: 22,
               ),
             ),
