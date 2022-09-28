@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   unicons: ^2.1.0
   video_player: ^2.4.7
+  auto_orientation: ^2.2.1
 
 dev_dependencies:
   flutter_test:
