@@ -1,3 +1,4 @@
+import 'package:app/components/video_player/components/control_timing.dart';
 import 'package:flutter/material.dart';
 
 // package | video player
@@ -27,15 +28,19 @@ class _VideoPlayerOverlayState extends State<VideoPlayerOverlay> {
     return Positioned.fill(
       child: Container(
         color: Colors.black26,
+        height: double.infinity,
+        width: double.infinity,
         child: Stack(
           alignment: Alignment.center,
           children: [ // all options on the overlay
             ControlPlayPause(controller: widget.controller), // play pause
 
-            ControlFullScreen(
+            ControlFullScreen( // full screen control
               controller: widget.controller,
               orientation: widget.orientation
-            ) // fullscreen
+            ),
+
+            ControlTiming(controller: widget.controller), // video timing
           ],
         ),
       ),

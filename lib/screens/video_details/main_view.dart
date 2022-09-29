@@ -30,7 +30,7 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
     });
     controller.setLooping(true);
     controller.initialize().then((_) => setState(() {}));
-    // controller.play();
+    controller.play();
   }
 
   @override
