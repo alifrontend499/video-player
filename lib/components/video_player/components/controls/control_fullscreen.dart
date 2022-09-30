@@ -37,14 +37,14 @@ class _ControlFullScreenState extends State<ControlFullScreen> {
     final isPortrait = widget.orientation == Orientation.portrait;
 
     return Positioned(
-      bottom: 12,
-      right: 7,
+      bottom: 5 + 10,
+      right: 10,
       child: InkWell(
         onTap: () => setLandscape(isPortrait),
         child: const Icon(
           UniconsLine.expand_arrows,
           color: Colors.white,
-          size: 20,
+          size: 16,
         ),
       ),
     );

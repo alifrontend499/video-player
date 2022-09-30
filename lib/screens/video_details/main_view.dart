@@ -15,7 +15,7 @@ class VideoDetailsScreen extends StatefulWidget {
 }
 
 class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
-  final String videoUrl = 'https://assets.mixkit.co/videos/preview/mixkit-going-down-a-curved-highway-through-a-mountain-range-41576-large.mp4';
+  final String videoUrl = 'https://player.vimeo.com/external/661255411.m3u8?s=ad5203d91b37ed920981cf4682384616dc7e23da';
   late VideoPlayerController controller;
 
   @override

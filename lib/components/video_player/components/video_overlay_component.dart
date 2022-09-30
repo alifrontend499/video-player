@@ -1,12 +1,14 @@
-import 'package:app/components/video_player/components/control_timing.dart';
 import 'package:flutter/material.dart';
 
 // package | video player
 import 'package:video_player/video_player.dart';
 
 // controls
-import 'package:app/components/video_player/components/control_play_pause.dart';
-import 'package:app/components/video_player/components/control_fullscreen.dart';
+import 'package:app/components/video_player/components/controls/control_play_pause.dart';
+import 'package:app/components/video_player/components/controls/control_fullscreen.dart';
+import 'package:app/components/video_player/components/controls/control_download.dart';
+import 'package:app/components/video_player/components/controls/control_timing.dart';
+import 'package:app/components/video_player/components/controls/control_settings.dart';
 
 class VideoPlayerOverlay extends StatefulWidget {
   final VideoPlayerController controller;
@@ -41,6 +43,10 @@ class _VideoPlayerOverlayState extends State<VideoPlayerOverlay> {
             ),
 
             ControlTiming(controller: widget.controller), // video timing
+
+            ControlDownload(controller: widget.controller), // download control
+
+            ControlSettings(controller: widget.controller), // download control
           ],
         ),
       ),

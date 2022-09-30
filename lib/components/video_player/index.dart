@@ -26,55 +26,56 @@ class VideoPlayerComponent extends StatefulWidget {
 class _VideoPlayerComponentState extends State<VideoPlayerComponent> {
   bool overlayVisibility = false;
 
-
-
   @override
   Widget build(BuildContext context) {
     if(widget.controller.value.isInitialized) {
-      return AspectRatio(
-        aspectRatio: widget.controller.value.aspectRatio,
-        child: GestureDetector(
-          onTap: () => setState(() => overlayVisibility = !overlayVisibility),
-          child: Container(
-            color: Colors.red,
-            width: double.infinity,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                VideoPlayer(widget.controller), // main video player
-
-                AnimatedOpacity( // for visibility of the overlay
-                  opacity: overlayVisibility ? 1 : 0,
-                  duration: const Duration(milliseconds: 200),
-                  child: Visibility(
-                    visible: overlayVisibility,
-                    child: VideoPlayerOverlay(
-                      controller: widget.controller,
-                      orientation: widget.orientation
-                    ),
-                  ), // on screen overlay
+      return GestureDetector(
+        onTap: () => setState(() => overlayVisibility = !overlayVisibility),
+        child: Container(
+          color: Colors.red,
+          width: double.infinity,
+          child: Stack(
+            fit: StackFit.expand,
+            // alignment: Alignment.bottomCenter,
+            children: [
+              buildVideoView(
+                child: AspectRatio(
+                  aspectRatio: widget.controller.value.aspectRatio,
+                  child: VideoPlayer(widget.controller), // main video player
                 ),
+              ),
 
-                SizedBox( // video player progress indicator
-                  height: 10,
-                  child: VideoProgressIndicator(
-                    widget.controller,
-                    allowScrubbing: true,
-                    colors: const VideoProgressColors(
-                      backgroundColor: Colors.white60,
-                      playedColor: globalColorVideoTheme,
-                      bufferedColor: Colors.grey
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              // AnimatedOpacity( // for visibility of the overlay
+              //   opacity: overlayVisibility ? 1 : 0,
+              //   duration: const Duration(milliseconds: 200),
+              //   child: Visibility(
+              //     visible: overlayVisibility,
+              //     child: VideoPlayerOverlay(
+              //         controller: widget.controller,
+              //         orientation: widget.orientation
+              //     ),
+              //   ), // on screen overlay
+              // ),
+              //
+              // SizedBox( // video player progress indicator
+              //   height: 10,
+              //   child: VideoProgressIndicator(
+              //     widget.controller,
+              //     allowScrubbing: true,
+              //     colors: const VideoProgressColors(
+              //         backgroundColor: Colors.white60,
+              //         playedColor: globalColorVideoTheme,
+              //         bufferedColor: Colors.grey
+              //     ),
+              //   ),
+              // ),
+            ],
           ),
         ),
       );
     } else {
       return Container(
-        height: 300,
+        height: 250,
         color: Colors.black,
         child: const Center(
           child: CircularProgressIndicator(
@@ -83,5 +84,22 @@ class _VideoPlayerComponentState extends State<VideoPlayerComponent> {
         ),
       );
     }
+  }
+
+  Widget buildVideoView({
+    required Widget child,
+  }) {
+    final size = widget.controller.value.size;
+    final height = size.height;
+    final width = size.width;
+
+    return FittedBox(
+      fit: BoxFit.cover,
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: child,
+      ),
+    );
   }
 }
