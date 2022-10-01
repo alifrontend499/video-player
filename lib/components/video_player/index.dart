@@ -12,11 +12,13 @@ import 'package:app/components/video_player/components/video_overlay_component.d
 class VideoPlayerComponent extends StatefulWidget {
   final VideoPlayerController controller;
   final Orientation orientation;
+  final String videoUrl;
 
   const VideoPlayerComponent({
     Key? key,
     required this.controller,
-    required this.orientation
+    required this.orientation,
+    required this.videoUrl
   }) : super(key: key);
 
   @override
@@ -29,47 +31,52 @@ class _VideoPlayerComponentState extends State<VideoPlayerComponent> {
   @override
   Widget build(BuildContext context) {
     if(widget.controller.value.isInitialized) {
-      return GestureDetector(
-        onTap: () => setState(() => overlayVisibility = !overlayVisibility),
-        child: Container(
-          color: Colors.red,
-          width: double.infinity,
-          child: Stack(
-            fit: StackFit.expand,
-            // alignment: Alignment.bottomCenter,
-            children: [
-              buildVideoView(
-                child: AspectRatio(
-                  aspectRatio: widget.controller.value.aspectRatio,
-                  child: VideoPlayer(widget.controller), // main video player
-                ),
-              ),
+      return AspectRatio(
+        aspectRatio: widget.controller.value.aspectRatio,
+        child: GestureDetector(
+          onTap: () => setState(() => overlayVisibility = !overlayVisibility),
+          child: Container(
+            color: Colors.red,
+            width: double.infinity,
+            child: Stack(
+              // fit: StackFit.expand,
+              alignment: Alignment.bottomCenter,
+              children: [
+                VideoPlayer(widget.controller), // main video player
+                // buildVideoView(
+                //   child: AspectRatio(
+                //     aspectRatio: widget.controller.value.aspectRatio,
+                //     child:
+                //   ),
+                // ),
 
-              // AnimatedOpacity( // for visibility of the overlay
-              //   opacity: overlayVisibility ? 1 : 0,
-              //   duration: const Duration(milliseconds: 200),
-              //   child: Visibility(
-              //     visible: overlayVisibility,
-              //     child: VideoPlayerOverlay(
-              //         controller: widget.controller,
-              //         orientation: widget.orientation
-              //     ),
-              //   ), // on screen overlay
-              // ),
-              //
-              // SizedBox( // video player progress indicator
-              //   height: 10,
-              //   child: VideoProgressIndicator(
-              //     widget.controller,
-              //     allowScrubbing: true,
-              //     colors: const VideoProgressColors(
-              //         backgroundColor: Colors.white60,
-              //         playedColor: globalColorVideoTheme,
-              //         bufferedColor: Colors.grey
-              //     ),
-              //   ),
-              // ),
-            ],
+                AnimatedOpacity( // for visibility of the overlay
+                  opacity: overlayVisibility ? 1 : 0,
+                  duration: const Duration(milliseconds: 200),
+                  child: Visibility(
+                    visible: overlayVisibility,
+                    child: VideoPlayerOverlay(
+                      controller: widget.controller,
+                      orientation: widget.orientation,
+                      videoUrl: widget.videoUrl
+                    ),
+                  ), // on screen overlay
+                ),
+
+                SizedBox( // video player progress indicator
+                  height: 10,
+                  child: VideoProgressIndicator(
+                    widget.controller,
+                    allowScrubbing: true,
+                    colors: const VideoProgressColors(
+                      backgroundColor: Colors.white60,
+                      playedColor: globalColorVideoTheme,
+                      bufferedColor: Colors.grey
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );

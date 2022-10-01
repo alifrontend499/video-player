@@ -13,11 +13,13 @@ import 'package:app/components/video_player/components/controls/control_settings
 class VideoPlayerOverlay extends StatefulWidget {
   final VideoPlayerController controller;
   final Orientation orientation;
+  final String videoUrl;
 
   const VideoPlayerOverlay({
     Key? key,
     required this.controller,
-    required this.orientation
+    required this.orientation,
+    required this.videoUrl
   }) : super(key: key);
 
   @override
@@ -44,7 +46,10 @@ class _VideoPlayerOverlayState extends State<VideoPlayerOverlay> {
 
             ControlTiming(controller: widget.controller), // video timing
 
-            ControlDownload(controller: widget.controller), // download control
+            ControlDownload(
+              controller: widget.controller,
+              videoUrl: widget.videoUrl
+            ), // download control
 
             ControlSettings(controller: widget.controller), // download control
           ],
