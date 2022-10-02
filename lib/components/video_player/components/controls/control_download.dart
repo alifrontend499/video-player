@@ -41,6 +41,8 @@ class ControlDownload extends StatefulWidget {
 class _ControlDownloadState extends State<ControlDownload> {
 
   double progress = 0;
+  String downloadIndicator = '0.0%';
+  bool isDownloading = false;
 
   void downloadVideo() async {
     print('onReceiveProgress clicked');
@@ -50,25 +52,54 @@ class _ControlDownloadState extends State<ControlDownload> {
       const uuid = Uuid();
       final String path = '$appDocPath/${uuid.v4()}_video_file';
 
+      setState(() {
+        isDownloading = true;
+      });
+
       final response = await Dio().download(
         widget.videoUrl,
         path,
-        onReceiveProgress: (receiveBytes, totalBytes) {
-          print('onReceiveProgress receiveBytes $receiveBytes');
-          print('onReceiveProgress totalBytes $totalBytes');
+        onReceiveProgress: (int received, int total) {
+          print('onReceiveProgress receiveBytes $received');
+          print('onReceiveProgress totalBytes $total');
 
-          setState(() {
-            progress = receiveBytes / totalBytes;
-          });
+          if(total != -1) {
+            setState(() {
+              progress = received / total;
+              if(progress == 1) { // download complete
+                isDownloading = false;
+              }
+              downloadIndicator = "${(progress * 100).toStringAsFixed(2)}%";
+
+            });
+          }
 
         }
       );
 
+      const snackBar = SnackBar(
+        content: Text('File Download successfully!! pls check the download folder'),
+        backgroundColor: Colors.greenAccent,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
       print('onReceiveProgress here file $path');
       print('onReceiveProgress here $response');
 
-    } catch(err) {
+    } on DioError catch(err) {
       print('onReceiveProgress error while getting the path $err');
+      const snackBar = SnackBar(
+        content: Text('Unknown error occured please try again'),
+        backgroundColor: Colors.redAccent,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } on Exception catch(err) {
+      print('onReceiveProgress exception error while getting the path $err');
+      const snackBar = SnackBar(
+        content: Text('Unknown error occured please try again'),
+        backgroundColor: Colors.redAccent,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 
@@ -79,7 +110,11 @@ class _ControlDownloadState extends State<ControlDownload> {
       top: 10,
       right: 10 + 35,
       child: InkWell(
-        onTap: downloadVideo,
+        onTap: () {
+          if(isDownloading == false) {
+            downloadVideo();
+          }
+        },
         child: Row(
           children: [
             const Icon(
@@ -89,7 +124,7 @@ class _ControlDownloadState extends State<ControlDownload> {
             ),
             SizedBox(width: 5),
 
-            Text('prog: $progress%', style: TextStyle(color: Colors.white),)
+            Text('prog: $downloadIndicator', style: TextStyle(color: Colors.white),)
           ],
         ),
       )

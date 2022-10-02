@@ -14,12 +14,14 @@ class VideoPlayerOverlay extends StatefulWidget {
   final VideoPlayerController controller;
   final Orientation orientation;
   final String videoUrl;
+  final bool enableDownload;
 
   const VideoPlayerOverlay({
     Key? key,
     required this.controller,
     required this.orientation,
-    required this.videoUrl
+    required this.videoUrl,
+    required this.enableDownload
   }) : super(key: key);
 
   @override
@@ -46,10 +48,12 @@ class _VideoPlayerOverlayState extends State<VideoPlayerOverlay> {
 
             ControlTiming(controller: widget.controller), // video timing
 
-            ControlDownload(
-              controller: widget.controller,
-              videoUrl: widget.videoUrl
-            ), // download control
+            if(widget.enableDownload == true) ...[
+              ControlDownload(
+                controller: widget.controller,
+                videoUrl: widget.videoUrl
+              ), // download control
+            ],
 
             ControlSettings(controller: widget.controller), // download control
           ],

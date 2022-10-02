@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // content screens
 import 'package:app/screens/videos_listing/main_view.dart';
+import 'package:app/screens/downloads/main_view.dart';
 
 // icons
 import 'package:unicons/unicons.dart';
@@ -17,6 +18,7 @@ class _MainContentScreenState extends State<MainContentScreen> {
   int currentIndex = 0;
   final List<Widget> screens= [
     const VideosListingScreen(),
+    const DownloadsListingScreen(),
   ];
 
   @override
@@ -34,10 +36,12 @@ class _MainContentScreenState extends State<MainContentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: currentIndex,
-        children: screens,
-      ),
+      // body: IndexedStack(
+      //   index: currentIndex,
+      //   children: screens,
+      // ),
+      body: screens[currentIndex],
+
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,

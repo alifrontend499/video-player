@@ -13,12 +13,14 @@ class VideoPlayerComponent extends StatefulWidget {
   final VideoPlayerController controller;
   final Orientation orientation;
   final String videoUrl;
+  final bool enableDownload;
 
   const VideoPlayerComponent({
     Key? key,
     required this.controller,
     required this.orientation,
-    required this.videoUrl
+    required this.videoUrl,
+    required this.enableDownload
   }) : super(key: key);
 
   @override
@@ -58,7 +60,8 @@ class _VideoPlayerComponentState extends State<VideoPlayerComponent> {
                     child: VideoPlayerOverlay(
                       controller: widget.controller,
                       orientation: widget.orientation,
-                      videoUrl: widget.videoUrl
+                      videoUrl: widget.videoUrl,
+                      enableDownload: widget.enableDownload
                     ),
                   ), // on screen overlay
                 ),

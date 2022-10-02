@@ -15,8 +15,8 @@ class VideoDetailsScreen extends StatefulWidget {
 }
 
 class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
-  final String videoUrl = 'https://player.vimeo.com/external/661255411.m3u8?s=ad5203d91b37ed920981cf4682384616dc7e23da';
-  // final String videoUrl = 'https://cdn.videvo.net/videvo_files/video/premium/video0053/large_watermarked/900-2_900-5792_preview.mp4';
+  // final String videoUrl = 'https://player.vimeo.com/external/661255411.m3u8?s=ad5203d91b37ed920981cf4682384616dc7e23da';
+  final String videoUrl = 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4';
 
   late VideoPlayerController controller;
 
@@ -57,7 +57,8 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
             return VideoPlayerComponent(
               controller: controller,
               orientation: orientation,
-              videoUrl: videoUrl
+              videoUrl: videoUrl,
+              enableDownload: true
             );
           },
         ),
